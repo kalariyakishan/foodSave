@@ -6,10 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -19,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'avatar',
         'password',
         'total_savings',
         'notifications_enabled',
@@ -46,5 +48,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getAvatarPathAttribute()
+    {
+        if ($this->avatar && file_exists(public_path('storage/avatars/' . $this->avatar))) {
+            return asset('storage/avatars/' . $this->avatar);
+        }
+
+        // Return the path to the default image if the avatar is not found or is null
+        return asset('bs5/assets/images/demo/users/face11.jpg');
     }
 }

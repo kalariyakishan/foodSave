@@ -49,16 +49,46 @@
             </select>
         </div>
     </div>
+    <div class="col-lg-6">
+        <div class="mb-3">
+    <label class="form-label">Avatar</label>
+    
+    <div class="form-control-feedback form-control-feedback-start">
+        <input type="file" 
+               name="avatar" 
+               id="avatar" 
+               accept="image/png" 
+               class="file-input">
+    </div>
+</div>
+    </div>
 </div>
 
 
+<div class="row">
+    <div class="col-lg-6">
+    </div>
+    <div class="col-lg-6">
+        @if(isset($user) && $user->avatar != '')
+            <x-image-preview url="{{ $user->avatar_path }}" class="col-md-6" id="image_logo" delete_url="" />
+        @endif
+    </div>
+</div>
 				
 
                 <div class="text-end">
                 	<button type="submit" class="btn btn-primary">Submit <i class="ph-paper-plane-tilt ms-2"></i></button>
                 </div>
             
-	    
+
+@push('css')
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/lightview/lightview.css')}}"  async />
+@endpush
+@push('script')
+<script src="{!! asset('bs5/assets/js/vendor/uploaders/fileinput/fileinput.min.js') !!}"></script>
+<script src="{!! asset('bs5/assets/js/vendor/uploaders/fileinput/plugins/sortable.min.js') !!}"></script>
+<script type="text/javascript" src="{{asset('assets/js/lightview/lightview.js')}}"></script>
+@endpush
 @push('js')
 <script type="text/javascript">
     var baseUrl =  $('meta[name="base-url"]').attr('content');
@@ -66,6 +96,21 @@
    
 
   $(document).ready(function(){
+
+    $('#avatar').fileinput({
+            browseLabel: 'Browse',
+            browseIcon: '<i class="ph-file-plus me-2"></i>',
+            uploadIcon: '<i class="ph-file-arrow-up me-2"></i>',
+            removeIcon: '<i class="ph-x fs-base me-2"></i>',
+            layoutTemplates: {
+                icon: '<i class="ph-check"></i>'
+            },
+            uploadClass: 'btn btn-light',
+            removeClass: 'btn btn-light',
+            initialCaption: "No file selected",
+            showUpload: false,
+            showPreview: false,
+        });
 
         
     $(".user-form").validateForm({

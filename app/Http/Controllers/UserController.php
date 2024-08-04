@@ -7,6 +7,7 @@ use Yajra\Datatables\Datatables;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Response;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -29,12 +30,10 @@ class UserController extends Controller
             $actions = view('components.datatable.action-layout')->with('slot', $editButton.$deleteButton);
             return $actions;
         })
-            // ->addColumn('language', function ($languages) {
-            //                 return $languages->languages->map(function($language) {
-            //                     return $language->name;
-            //                 })->implode(',');
-            // })
-            ->rawColumns(['action'])->smart(false, ['action'])->make(true);
+            ->editColumn('avatar', function ($item) {
+                return '<img src="'.$item->avatar_path.'" alt="User Avatar" class="w-32px h-32px rounded-pill" />';
+            })
+            ->rawColumns(['action','avatar'])->smart(false, ['action'])->make(true);
     }
 
     /**
@@ -53,6 +52,19 @@ class UserController extends Controller
 
         $requestData = $request->all();
         $requestData['password'] = Hash::make('12345678');
+        if ($request->hasFile('avatar')) {
+            // Delete old avatar if exists
+            if ($user->avatar != '') {
+                Storage::delete('public/avatars/' . $user->avatar);
+            }
+
+            // Store the new avatar
+            $avatarName = time() . '.' . $request->avatar->extension();
+            $request->avatar->storeAs('public/avatars', $avatarName);
+
+            // Update user's avatar in the database
+            $requestData['avatar'] = $avatarName;
+        }
         User::create($requestData);
 
         return redirect(route('users.index'))->with('message', 'User Created Successfully!');
@@ -82,6 +94,19 @@ class UserController extends Controller
     {   
         $requestData = $request->all();
         $user = User::find($id);
+        if ($request->hasFile('avatar')) {
+            // Delete old avatar if exists
+            if ($user->avatar != '') {
+                Storage::delete('public/avatars/' . $user->avatar);
+            }
+
+            // Store the new avatar
+            $avatarName = time() . '.' . $request->avatar->extension();
+            $request->avatar->storeAs('public/avatars', $avatarName);
+
+            // Update user's avatar in the database
+            $requestData['avatar'] = $avatarName;
+        }
         $user->update($requestData);
 
         return redirect(route('users.index'))->with('message', 'User Updated Successfully!');
@@ -92,6 +117,10 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        $user = User::find($id);
+        if ($user->avatar != '') {
+                Storage::delete('public/avatars/' . $user->avatar);
+        }
         User::destroy($id);
        
         return response()->json(['message'=>'User Deleted Successfully!'],200);

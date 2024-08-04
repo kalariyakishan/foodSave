@@ -41,8 +41,7 @@
                     }
                 },
         columns: [
-            //{data: 'flag', name: 'flag',orderable: false,searchable:false},
-            {data: 'name', name: 'name'},
+            {data: 'avatar', name: 'avatar',orderable: false,searchable:false},
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
             {data: 'total_savings', name: 'total_savings'},

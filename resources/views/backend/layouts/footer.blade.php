@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<span>&copy; {{ \Carbon\Carbon::now()->year; }} <a href="/">Food Save</a> by <a href="/" target="_blank"> Limitless </a> </span>
 
-		<ul class="nav">
+		<ul class="nav" style="display:none;">
 			<li class="nav-item">
 				<a href="{{url('/Terms-Conditions')}}" class="navbar-nav-link navbar-nav-link-icon rounded" target="_blank">
 					<div class="d-flex align-items-center mx-md-1">
