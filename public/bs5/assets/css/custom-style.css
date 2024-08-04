@@ -1,0 +1,71 @@
+/*input, input[type="file"] {
+    font-family: var(--body-font-family);
+}*/
+
+.custom-pills>li.pills_enable>a.active,
+.custom-pills>li.pills_enable>a:focus {
+    color: #fff;
+    background: #00a65a;
+}
+.custom-pills>li.pills_pending>a.active,
+.custom-pills>li.pills_pending>a:focus {
+    color: #fff;
+    background: #00bcd4;
+}
+.custom-pills>li.pills_disable>a.active,
+.custom-pills>li.pills_disable>a:focus {
+    color: #fff;
+    background: #f44336;
+}
+.custom-pills>li>a {
+    padding: 4px 10px !important;
+    color: #333;
+    background: #ddd;
+    border-radius: 50px;
+}
+.select2-selection__rendered {
+    padding-left: 45px !important;
+}
+
+.module_permission {
+    border: 1px solid #666;
+    width: auto;
+    margin: 5px;
+    display: inline-block;
+    vertical-align: top;
+}
+.module_permission h4 {
+    font-size: 15px;
+    background-color: #556e7d;
+}
+.module_permission ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 5px 0;
+    text-align: center;
+}
+.module_permission ul li {
+    display: inline-block;
+    color: #333;
+    font-size: 10px;
+    padding: 0px 5px;
+    margin: 0 auto;
+    text-align: center;
+}
+.module_permission ul li h5 {
+    font-size: 12px;
+    margin: 0;
+}
+.module_permission ul li svg.green path {
+    fill: green;
+}
+.module_permission ul li svg.red path {
+    fill: red;
+}
+.module_permission ul li i {
+    font-size: 10px;
+}
+
+.intl-tel-input .selected-flag {
+    height: 38px !important;
+}
