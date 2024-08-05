@@ -18,9 +18,12 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('total_savings')->default(0);
-            $table->tinyInteger('notifications_enabled')->default(0);
-            $table->tinyInteger('is_admin')->default(0);
+            $table->tinyInteger('notifications_enabled')->default(1);
+            $table->enum('is_user',['customer','admin','restaurant'])->default('customer');
             $table->string('avatar')->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
+            $table->foreignId('restaurant_id')->nullable()->constrained('restaurants')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

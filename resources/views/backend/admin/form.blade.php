@@ -22,9 +22,9 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="mb-3">
-            <label class="form-label">Total Savings</label>
-            <input type="number" class="form-control" name="total_savings" placeholder="Total Savings" id="total_savings" min="0"
-                   value="{{ old('total_savings', isset($user) ? $user->total_savings : '') }}">
+            <label class="form-label">Password (<span class="text-sm">if you want change password then enter</span>)</label>
+            <input type="text" class="form-control" name="password" placeholder="Password" id="password"
+                   value="{{ old('password') }}">
         </div>
     </div>
 
@@ -39,16 +39,10 @@
     </div>
 </div>
 
-<input type="hidden" name="is_user" value="customer">
+<input type="hidden" name="is_user" value="admin">
 
 <div class="row">
-    <div class="col-lg-6">
-        <div class="mb-3">
-            <label class="form-label">Password (<span class="text-sm">if you want change password then enter</span>)</label>
-            <input type="text" class="form-control" name="password" placeholder="Password" id="password"
-                   value="{{ old('password') }}">
-        </div>
-    </div>
+    
     <div class="col-lg-6">
         <div class="mb-3">
     <label class="form-label">Avatar</label>
@@ -62,18 +56,14 @@
     </div>
 </div>
     </div>
-</div>
-
-
-<div class="row">
-    <div class="col-lg-6">
-    </div>
     <div class="col-lg-6">
         @if(isset($user) && $user->avatar != '')
             <x-image-preview url="{{ $user->avatar_path }}" class="col-md-6" id="image_logo" delete_url="" />
         @endif
     </div>
 </div>
+
+
 				
 
                 <div class="text-end">
@@ -121,7 +111,7 @@
         "email": {
 	   	required: true,
 	   	remote: {
-	   	  url: baseUrl+"/user/email",
+	   	  url: baseUrl+"/admin/email",
 	   	  type: "post",
 	   	  data: {email:$(email).val(),_token:"{{ csrf_token() }}",user_id:'{{ isset($user) ? $user->id : '' }}'},
 	   	  dataFilter: function (data) {

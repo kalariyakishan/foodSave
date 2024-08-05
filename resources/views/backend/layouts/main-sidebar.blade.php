@@ -42,10 +42,28 @@
 						</li>
 
 						<li class="nav-item">
+							<a href="{{ route('admins.index') }}" class="nav-link {{{ (Request::is('admins/*') ? 'active' : '') }}} || {{{ (Request::is('admins') ? 'active' : '') }}}">
+								<i class="ph-user-circle-gear"></i>
+								<span>
+									Admins
+								</span>
+							</a>
+						</li>
+
+						<li class="nav-item">
 							<a href="{{ route('users.index') }}" class="nav-link {{{ (Request::is('users/*') ? 'active' : '') }}} || {{{ (Request::is('users') ? 'active' : '') }}}">
 								<i class="ph-users"></i>
 								<span>
 									Users
+								</span>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a href="{{ route('restaurants.index') }}" class="nav-link {{{ (Request::is('restaurants/*') ? 'active' : '') }}} || {{{ (Request::is('restaurants') ? 'active' : '') }}}">
+								<i class="ph-handshake"></i>
+								<span>
+									Restaurants
 								</span>
 							</a>
 						</li>

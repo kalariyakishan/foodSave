@@ -24,7 +24,8 @@ class User extends Authenticatable
         'password',
         'total_savings',
         'notifications_enabled',
-        'is_admin'
+        'is_user',
+        'restaurant_id'
     ];
 
     /**

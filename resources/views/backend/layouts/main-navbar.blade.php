@@ -14,7 +14,7 @@
 				</a>
 			</div>
 
-			<ul class="nav flex-row">
+			<ul class="nav flex-row" style="display:none;">
 				<li class="nav-item d-lg-none">
 					<a href="#navbar_search" class="navbar-nav-link navbar-nav-link-icon rounded-pill" data-bs-toggle="collapse">
 						<i class="ph-magnifying-glass"></i>
@@ -201,19 +201,19 @@
 				<li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
 					<a href="#" class="navbar-nav-link align-items-center rounded-pill p-1" data-bs-toggle="dropdown">
 						<div class="status-indicator-container">
-							<img src="{!! asset('bs5/assets/images/demo/users/face11.jpg') !!}" class="w-32px h-32px rounded-pill" alt="">
+							<img src="{{ Auth::user()->avatar_path }}" class="w-32px h-32px rounded-pill" alt="">
 							<span class="status-indicator bg-success"></span>
 						</div>
-						<span class="d-none d-lg-inline-block mx-lg-2">Victoria</span>
+						<span class="d-none d-lg-inline-block mx-lg-2">{{ Auth::user()->name }}</span>
 					</a>
 
 					<div class="dropdown-menu dropdown-menu-end">
-						<a href="#" class="dropdown-item">
+						{{-- <a href="#" class="dropdown-item">
 							<i class="ph-user-circle me-2"></i>
 							My profile
 						</a>
 						
-						<div class="dropdown-divider"></div>
+						<div class="dropdown-divider"></div> --}}
 						
 						<a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
 											document.getElementById('logout-form').submit();"><i

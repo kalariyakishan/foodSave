@@ -9,24 +9,24 @@ use Illuminate\Support\Facades\Hash;
 use Response;
 use Illuminate\Support\Facades\Storage;
 
-class UserController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('backend.user.index');
+        return view('backend.admin.index');
     }
 
     public function activityDatatable()
     {
 
-        $record = User::query()->where('is_user','customer');
+        $record = User::query()->where('is_user','admin');
         return Datatables::of($record)->addColumn('action', function ($item) {
-            $editButton = view('components.datatable.edit')->with('url',route('users.edit',$item->id));
-            $deleteButton = view('components.datatable.delete',compact('item'))->with('url',route('users.destroy',$item->id))->with('datatable','#datatable');
-            //$showButton = view('components.datatable.show')->with('url',route('users.show',$item->id));
+            $editButton = view('components.datatable.edit')->with('url',route('admins.edit',$item->id));
+            $deleteButton = view('components.datatable.delete',compact('item'))->with('url',route('admins.destroy',$item->id))->with('datatable','#datatable');
+            //$showButton = view('components.datatable.show')->with('url',route('admins.show',$item->id));
             $actions = view('components.datatable.action-layout')->with('slot', $editButton.$deleteButton);
             return $actions;
         })
@@ -41,7 +41,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('backend.user.create');
+        return view('backend.admin.create');
     }
 
     /**
@@ -71,7 +71,7 @@ class UserController extends Controller
         }
         User::create($requestData);
 
-        return redirect(route('users.index'))->with('message', 'User Created Successfully!');
+        return redirect(route('admins.index'))->with('message', 'Admin Created Successfully!');
     }
 
     /**
@@ -88,7 +88,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::find($id);
-        return view('backend.user.edit',compact('user'));
+        return view('backend.admin.edit',compact('user'));
     }
 
     /**
@@ -118,7 +118,7 @@ class UserController extends Controller
         }
         $user->update($requestData);
 
-        return redirect(route('users.index'))->with('message', 'User Updated Successfully!');
+        return redirect(route('admins.index'))->with('message', 'Admin Updated Successfully!');
     }
 
     /**
@@ -132,7 +132,7 @@ class UserController extends Controller
         }
         User::destroy($id);
        
-        return response()->json(['message'=>'User Deleted Successfully!'],200);
+        return response()->json(['message'=>'Admin Deleted Successfully!'],200);
         
     }
 
