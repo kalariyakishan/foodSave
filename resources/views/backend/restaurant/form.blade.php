@@ -109,6 +109,16 @@
     </div>
 </div>
 
+<div class="col-lg-6">
+    <div class="mb-3">
+        <label class="form-label">Status</label>
+        <select class="form-control select" name="status" id="status">
+            <option value="1" {{ old('status', isset($restaurant) && $restaurant->status == 1 ? 'selected' : '') }}>Active</option>
+            <option value="0" {{ old('status', isset($restaurant) && $restaurant->status == 0 ? 'selected' : '') }}>Inactive</option>
+        </select>
+    </div>
+</div>
+
 </div>
 <div class="row">
     <div class="col-lg-6">
