@@ -10,12 +10,7 @@ Edit Restaurant
 
 @endsection
 @section('main-content')
-<div class="card">
-      <div class="card-header">
-         <h6 class="mb-0">Restaurant</h6>
-      </div>
 
-        <div class="card-body">
 <form action="{{ route('restaurants.update',$restaurant->id) }}" method="POST" 
       class="restaurant-form" 
       enctype="multipart/form-data">
@@ -26,6 +21,4 @@ Edit Restaurant
     @include('backend.restaurant.form', ['submitButtonText' => 'Update', 'disable' => true])
 
 </form>
-</div>
-</div>
 @endsection

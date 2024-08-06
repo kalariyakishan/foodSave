@@ -14,4 +14,12 @@ class FoodItem extends Model
     {
         return $this->hasMany(FoodItemImage::class);
     }
+
+    public function food_size(){
+        return $this->belongsTo(FoodSize::class,'food_size_id');
+    }
+
+    public function food_type(){
+        return $this->belongsTo(FoodType::class,'food_type_id');
+    }
 }

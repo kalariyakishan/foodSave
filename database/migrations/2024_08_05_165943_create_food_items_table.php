@@ -51,7 +51,6 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->string('daily_limit')->nullable();
-            $table->decimal('price', 8, 2)->nullable();
             $table->foreignId('food_type_id')->nullable()->constrained('food_types')->onDelete('set null');
             $table->foreignId('food_size_id')->nullable()->constrained('food_sizes')->onDelete('set null');
             $table->tinyInteger('status')->default(1);// 0 may be later/ 1 start selling

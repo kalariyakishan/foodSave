@@ -67,6 +67,15 @@
 								</span>
 							</a>
 						</li>
+
+						<li class="nav-item">
+							<a href="{{ route('food_sizes.index') }}" class="nav-link {{{ (Request::is('food_sizes/*') ? 'active' : '') }}} || {{{ (Request::is('food_sizes') ? 'active' : '') }}}">
+								<i class="ph-currency-circle-dollar"></i>
+								<span>
+									Food Size Setting
+								</span>
+							</a>
+						</li>
 						
 						<li class="nav-item">
 							<a href="../../../../docs/other_changelog.html" class="nav-link">

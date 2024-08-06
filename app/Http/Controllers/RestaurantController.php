@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Restaurant;
+use App\Models\Country;
+use App\Models\FoodItem;
+use App\Models\RestaurantType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -27,8 +30,8 @@ class RestaurantController extends Controller
         return Datatables::of($record)->addColumn('action', function ($item) {
             $editButton = view('components.datatable.edit')->with('url',route('restaurants.edit',$item->id));
             $deleteButton = view('components.datatable.delete',compact('item'))->with('url',route('restaurants.destroy',$item->id))->with('datatable','#datatable');
-            //$showButton = view('components.datatable.show')->with('url',route('users.show',$item->id));
-            $actions = view('components.datatable.action-layout')->with('slot', $editButton.$deleteButton);
+            $showButton = view('components.datatable.show')->with('url',route('restaurants.show',$item->id));
+            $actions = view('components.datatable.action-layout')->with('slot', $editButton.$showButton.$deleteButton);
             return $actions;
         })
             ->editColumn('logo', function ($item) {
@@ -39,13 +42,36 @@ class RestaurantController extends Controller
             })
             ->rawColumns(['action','logo'])->smart(false, ['action'])->make(true);
     }
+
+    public function activityFoodItemDatatable($restaurant_id)
+    {
+
+        $record = FoodItem::query()->where('restaurant_id',$restaurant_id);
+        return Datatables::of($record)
+            ->addColumn('price', function ($item) {
+                return $item->food_size->price ?? '-';
+            })
+            ->addColumn('app_price', function ($item) {
+                return $item->food_size->app_price ?? '-';
+            })
+            ->editColumn('food_type_id', function ($item) {
+                return $item->food_type->name ?? '-';
+            })
+            ->editColumn('is_surprise', function ($item) {
+                return $item->is_surprise ?  'Start Selling' : 'May Be Later';
+            })
+            
+            ->rawColumns([])->smart(false, ['action'])->make(true);
+    }
     
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('backend.restaurant.create');
+        $countries = Country::pluck('name', 'id')->prepend('', '');
+        $restaurant_types = RestaurantType::pluck('name', 'id')->prepend('', '');
+        return view('backend.restaurant.create',compact('countries','restaurant_types'));
     }
 
     /**
@@ -63,6 +89,15 @@ class RestaurantController extends Controller
 
             // Update Restaurant's logo in the database
             $requestData['logo'] = $logoName;
+        }
+        if ($request->hasFile('banner_image')) {
+
+            // Store the new banner_image
+            $logoName = time() . '.' . $request->banner_image->extension();
+            $request->banner_image->storeAs('public/restaurants', $logoName);
+
+            // Update Restaurant's banner_image in the database
+            $requestData['banner_image'] = $logoName;
         }
         $restaurant = Restaurant::create($requestData);
 
@@ -83,7 +118,7 @@ class RestaurantController extends Controller
      */
     public function show(Restaurant $restaurant)
     {
-        //
+        return view('backend.restaurant.show',compact('restaurant'));
     }
 
     /**
@@ -91,7 +126,9 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-        return view('backend.restaurant.edit',compact('restaurant'));
+        $countries = Country::pluck('name', 'id')->prepend('Select a country', '');
+        $restaurant_types = RestaurantType::pluck('name', 'id')->prepend('Select a type', '');
+        return view('backend.restaurant.edit',compact('restaurant','countries','restaurant_types'));
     }
 
     /**
@@ -104,7 +141,7 @@ class RestaurantController extends Controller
         if ($request->hasFile('logo')) {
             // Delete old avatar if exists
             if ($restaurant->logo != '') {
-                Storage::delete('public/restaurants/' . $user->logo);
+                Storage::delete('public/restaurants/' . $restaurant->logo);
             }
             // Store the new logo
             $logoName = time() . '.' . $request->logo->extension();
@@ -112,6 +149,18 @@ class RestaurantController extends Controller
 
             // Update Restaurant's logo in the database
             $requestData['logo'] = $logoName;
+        }
+        if ($request->hasFile('banner_image')) {
+            // Delete old avatar if exists
+            if ($restaurant->banner_image != '') {
+                Storage::delete('public/restaurants/' . $restaurant->banner_image);
+            }
+            // Store the new logo
+            $logoName = time() . '.' . $request->banner_image->extension();
+            $request->banner_image->storeAs('public/restaurants', $logoName);
+
+            // Update Restaurant's logo in the database
+            $requestData['banner_image'] = $logoName;
         }
         $restaurant->update($requestData);
 
@@ -132,8 +181,11 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
-        if ($restaurant->avatar != '') {
-                Storage::delete('public/restaurants/' . $user->avatar);
+        if ($restaurant->logo != '') {
+                Storage::delete('public/restaurants/' . $restaurant->logo);
+        }
+        if ($restaurant->banner_image != '') {
+                Storage::delete('public/restaurants/' . $restaurant->banner_image);
         }
         $restaurant->delete();
        
