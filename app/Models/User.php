@@ -25,6 +25,8 @@ class User extends Authenticatable
         'total_savings',
         'notifications_enabled',
         'is_user',
+        'latitude',
+        'longitude',
         'restaurant_id'
     ];
 
