@@ -1,4 +1,12 @@
 
+
+<div class="card">
+      <div class="card-header">
+         <h6 class="mb-0">Restaurant</h6>
+      </div>
+
+        <div class="card-body">
+
 <input type="hidden" name="is_user" value="restaurant">    
         
 <div class="row">
@@ -36,6 +44,98 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+<div class="col-lg-4">
+    <div class="mb-3">
+        <label class="form-label">Restaurant Stars</label>
+        <select class="form-control select" name="stars" id="stars">
+            <option value="1" {{ old('stars', isset($restaurant) && $restaurant->stars == 1 ? 'selected' : '') }}>1 Star</option>
+            <option value="2" {{ old('stars', isset($restaurant) && $restaurant->stars == 2 ? 'selected' : '') }}>2 Star</option>
+            <option value="3" {{ old('stars', isset($restaurant) && $restaurant->stars == 3 ? 'selected' : '') }}>3 Star</option>
+            <option value="4" {{ old('stars', isset($restaurant) && $restaurant->stars == 4 ? 'selected' : '') }}>4 Star</option>
+            <option value="5" {{ old('stars', isset($restaurant) && $restaurant->stars == 5 ? 'selected' : '') }}>5 Star</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-lg-4">
+    <div class="mb-3">
+        <label class="form-label">Status</label>
+        <select class="form-control select" name="status" id="status">
+            <option value="1" {{ old('status', isset($restaurant) && $restaurant->status == 1 ? 'selected' : '') }}>Active</option>
+            <option value="0" {{ old('status', isset($restaurant) && $restaurant->status == 0 ? 'selected' : '') }}>In-Active</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-lg-4">
+    <div class="mb-3">
+        <label class="form-label">Restaurant Type</label>
+        <select class="form-control select" name="restaurant_type_id" id="restaurant_type_id" data-placeholder="Restaurant Type">
+            @foreach($restaurant_types as $id => $name)
+                <option value="{{ $id }}" {{ old('restaurant_type_id', isset($restaurant) && $restaurant->restaurant_type_id == $id ? 'selected' : '') }}>
+                    {{ $name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="mb-3">
+    <label class="form-label">Logo</label>
+    
+    <div class="form-control-feedback form-control-feedback-start">
+        <input type="file" 
+               name="logo" 
+               id="logo" 
+               accept="image/png" 
+               class="file-input">
+    </div>
+</div>
+    </div>
+    <div class="col-lg-6">
+        <div class="mb-3">
+    <label class="form-label">Banner Image</label>
+    
+    <div class="form-control-feedback form-control-feedback-start">
+        <input type="file" 
+               name="banner_image" 
+               id="banner_image" 
+               accept="image/png" 
+               class="file-input">
+    </div>
+</div>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        @if(isset($restaurant) && $restaurant->logo != '')
+            <x-image-preview url="{{ $restaurant->logo_path }}" class="col-md-6" id="image_logo" delete_url="" />
+        @endif
+    </div>
+    <div class="col-lg-6">
+        @if(isset($restaurant) && $restaurant->banner_image != '')
+            <x-image-preview url="{{ $restaurant->banner_image_path }}" class="col-md-6" id="image_banner" delete_url="" />
+        @endif
+    </div>
+    </div>
+
+</div>
+</div>
+
+
+<div class="card">
+      <div class="card-header">
+         <h6 class="mb-0">Address</h6>
+      </div>
+
+        <div class="card-body">
 
 <div class="row">
     <div class="col-lg-6">
@@ -87,64 +187,36 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="mb-3">
-            <label class="form-label">Country</label>
-            <input type="text" class="form-control" name="country" placeholder="Country" id="country"
-                   value="{{ old('country', isset($restaurant) ? $restaurant->country : '') }}">
-        </div>
-    </div>
-</div>
-
-<div class="row">
-<div class="col-lg-6">
     <div class="mb-3">
-        <label class="form-label">Restaurant Stars</label>
-        <select class="form-control select" name="stars" id="stars">
-            <option value="1" {{ old('stars', isset($restaurant) && $restaurant->stars == 1 ? 'selected' : '') }}>1 Star</option>
-            <option value="2" {{ old('stars', isset($restaurant) && $restaurant->stars == 2 ? 'selected' : '') }}>2 Star</option>
-            <option value="3" {{ old('stars', isset($restaurant) && $restaurant->stars == 3 ? 'selected' : '') }}>3 Star</option>
-            <option value="4" {{ old('stars', isset($restaurant) && $restaurant->stars == 4 ? 'selected' : '') }}>4 Star</option>
-            <option value="5" {{ old('stars', isset($restaurant) && $restaurant->stars == 5 ? 'selected' : '') }}>5 Star</option>
+        <label class="form-label">Country</label>
+        <select class="form-control select" name="country_id" id="country_id" data-placeholder="Country">
+            @foreach($countries as $id => $name)
+                <option value="{{ $id }}" {{ old('country_id', isset($restaurant) && $restaurant->country_id == $id ? 'selected' : '') }}>
+                    {{ $name }}
+                </option>
+            @endforeach
         </select>
     </div>
 </div>
-
-<div class="col-lg-6">
-    <div class="mb-3">
-        <label class="form-label">Status</label>
-        <select class="form-control select" name="status" id="status">
-            <option value="1" {{ old('status', isset($restaurant) && $restaurant->status == 1 ? 'selected' : '') }}>Active</option>
-            <option value="0" {{ old('status', isset($restaurant) && $restaurant->status == 0 ? 'selected' : '') }}>Inactive</option>
-        </select>
-    </div>
 </div>
 
 </div>
-<div class="row">
-    <div class="col-lg-6">
-        <div class="mb-3">
-    <label class="form-label">Logo</label>
-    
-    <div class="form-control-feedback form-control-feedback-start">
-        <input type="file" 
-               name="logo" 
-               id="logo" 
-               accept="image/png" 
-               class="file-input">
-    </div>
 </div>
-    </div>
-    <div class="col-lg-6">
-        @if(isset($restaurant) && $restaurant->logo != '')
-            <x-image-preview url="{{ $restaurant->logo_path }}" class="col-md-6" id="image_logo" delete_url="" />
-        @endif
-    </div>
-</div>
-				
+
+
+			
+            <div class="card">
+     
+
+        <div class="card-body">
+
 
                 <div class="text-end">
                 	<button type="submit" class="btn btn-primary">Submit <i class="ph-paper-plane-tilt ms-2"></i></button>
                 </div>
+            </div>
+        </div>
+
             
 
 @push('css')
@@ -178,10 +250,36 @@
             showPreview: false,
         });
 
-        
+    $('#banner_image').fileinput({
+            browseLabel: 'Browse',
+            browseIcon: '<i class="ph-file-plus me-2"></i>',
+            uploadIcon: '<i class="ph-file-arrow-up me-2"></i>',
+            removeIcon: '<i class="ph-x fs-base me-2"></i>',
+            layoutTemplates: {
+                icon: '<i class="ph-check"></i>'
+            },
+            uploadClass: 'btn btn-light',
+            removeClass: 'btn btn-light',
+            initialCaption: "No file selected",
+            showUpload: false,
+            showPreview: false,
+        });
+
+    $.validator.addMethod("validLatitude", function(value, element) {
+        return this.optional(element) || (value >= -90 && value <= 90);
+    }, "Please enter a valid latitude (between -90 and 90).");
+
+    $.validator.addMethod("validLongitude", function(value, element) {
+        return this.optional(element) || (value >= -180 && value <= 180);
+    }, "Please enter a valid longitude (between -180 and 180).");
+
+
     $(".restaurant-form").validateForm({
        rules: {
         "name": {
+            required: true,
+        },
+        "restaurant_type_id": {
             required: true,
         },
         "email": {
@@ -215,11 +313,11 @@
         },
         "latitude": {
             required: true,
-            number: true
+            validLatitude: true
         },
         "longitude": {
             required: true,
-            number: true
+            validLongitude: true
         },
         "street": {
             required: true,
@@ -236,7 +334,7 @@
             minlength: 5,
             maxlength: 10
         },
-        "country": {
+        "country_id": {
             required: true,
         },
         "stars": {
@@ -247,6 +345,9 @@
     messages: {
         'name': {
             required: "Name is required.",
+        },
+        'restaurant_type_id': {
+            required: "Restaurant type is required.",
         },
         'email': {
             required: "Email is required.",
@@ -286,7 +387,7 @@
             minlength: "Zip Code must be at least 5 digits.",
             maxlength: "Zip Code cannot exceed 10 digits."
         },
-        'country': {
+        'country_id': {
             required: "Country is required.",
         },
         'stars': {
